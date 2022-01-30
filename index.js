@@ -26,11 +26,8 @@ module.exports = function (configData) {
     if (!config.secretKey)
         throw new Error('Publisher server key secret key is not defined')
 
-    if (!config.backend.server)
-        throw new Error('Backend server required')
-
-
-
+    if (!config.server)
+        throw new Error('Backend server required ')
 
 
     function publish(publishConfig){
