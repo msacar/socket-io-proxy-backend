@@ -22,8 +22,6 @@ module.exports = function (configData) {
 
     let config = {...defaults, ...configData}
 
-    if (!config.publisher.server)
-        throw new Error('Publisher server not defined')
 
     if (!config.secretKey)
         throw new Error('Publisher server key secret key is not defined')
@@ -31,14 +29,18 @@ module.exports = function (configData) {
     if (!config.backend.server)
         throw new Error('Backend server required')
 
-    let connectUrl = `${config.publisher.server}`
-    
-    if (config.publisher.port)
-        connectUrl +=`:${config.publisher.port.toString()}`
 
 
 
-    function connect(){
+
+    function publish(publishConfig){
+        if (!publishConfig.server)
+            throw new Error('Publisher server not defined')
+        let connectUrl = `${publishConfig.server}`
+
+        if (config.publisher.port)
+            connectUrl +=`:${publishConfig.port.toString()}`
+
         socket = io.connect(connectUrl, {
             reconnection        : true,
             query: `secret_key=${config.secretKey}`,
