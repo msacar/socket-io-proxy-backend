@@ -1,0 +1,9 @@
+node_modules/
+.idea
+.env
+
+# npm
+package-lock.json
+*.log
+*.gz
+gi
