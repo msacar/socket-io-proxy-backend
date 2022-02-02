@@ -1,4 +1,4 @@
-# socket-io-proxy-localhost
+# socket-io-proxy-backend
 
 ## Features
 Helps developers to reverse proxy their localhost via socket.io on on aws, heroku or any server can run node.js
