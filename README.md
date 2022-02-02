@@ -10,10 +10,12 @@ Uses socket.io to make a one way reverse proxy
 This project depends on  [Reverse proxy publisher server](https://github.com/msacar/socket-io-reverse-proxy-server)
 ## How to use
 
-Sample Backend Localhost Server Code:
+
+Sample Localhost Server Code:
 
 ```js
 const proxyBackend  = require('socket-io-proxy-backend')
+
 const proxyBackendClient =  proxyBackend({
     //its your localhost
     server :"http://localhost",//its default
@@ -21,14 +23,14 @@ const proxyBackendClient =  proxyBackend({
     //secret key for authentication with proxy publisher server
     secretKey: "very_secret_key",
 })
-
 //Publish localhost to cloud
-proxyBackendClient.publish({
-    //its your aws server
-    server : "http://ec2-3-120-246-199.eu-central-1.compute.amazonaws.com/",
+const socket  = proxyBackendClient.publish({
+    //its your cloud server
+    server : "http://ec2-3-120-246-199.eu-central-1.compute.amazonaws.com/", // our cloud server's publicly reachable address
     port : 80  //its default
 })
 ```
+
 Sample Publisher Server Code:
 
 ```js
