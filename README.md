@@ -32,7 +32,7 @@ proxyBackendClient.publish({
 Sample Publisher Server Code:
 
 ```js
-const proxyServer  = require('msacar/socket-io-proxy-publisher')
+const proxyServer  = require('socket-io-reverse-proxy-server')
 const proxyPublisherServer = proxyServer({
     secretKey:"very_secret_key"
 })
