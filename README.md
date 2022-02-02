@@ -4,16 +4,16 @@
 Helps developers to reverse proxy their localhost via socket.io on on aws, heroku or any server can run node.js
 Uses socket.io to make a one way reverse proxy
 ## Requirements
-- any cloud or dedicated server can run Node.js installed with [Reverse proxy server](https://github.com/msacar/socket-io-reverse-proxy-server) (which is going to be our publicly reachable server)
-- a local computer can run Node.js installed with [Localhost proxy client](https://github.com/msacar/socket-io-proxy-localhost) (which is make a connection from localhost to proxy server and serve our localhost)
+- any cloud or dedicated server can run Node.js installed with [Reverse proxy publisher server](https://github.com/msacar/socket-io-reverse-proxy-server) (which is going to be our publicly reachable server)
+- a local computer can run Node.js installed with [Reverse proxy backend server](https://github.com/msacar/socket-io-proxy-backend) (which is make a connection from localhost to proxy server and serve our localhost)
 
-This project depends on  [Reverse proxy server](https://github.com/msacar/socket-io-reverse-proxy-server)
+This project depends on  [Reverse proxy publisher server](https://github.com/msacar/socket-io-reverse-proxy-server)
 ## How to use
 
-Sample Localhost Server Code:
+Sample Backend Localhost Server Code:
 
 ```js
-const proxyBackend  = require('socket-io-proxy-localhost')
+const proxyBackend  = require('socket-io-proxy-backend')
 const proxyBackendClient =  proxyBackend({
     //its your localhost
     server :"http://localhost",//its default
@@ -38,7 +38,7 @@ const proxyPublisherServer = proxyServer({
 })
 
 proxyPublisherServer.listen(80,(e)=>{
-    console.log("Proxy Publisher server running and waiting for localhost's connection.")
+    console.log("Proxy Publisher server running and waiting for socket-io-proxy-backend's connection.")
 })
 ```
 
@@ -47,7 +47,7 @@ proxyPublisherServer.listen(80,(e)=>{
 
 ```bash
 // with npm
-npm install socket-io-proxy-localhost
+npm install socket-io-proxy-backend
 
 ```
 
