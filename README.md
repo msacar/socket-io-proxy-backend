@@ -13,7 +13,7 @@ This project depends on  [Reverse proxy server](https://github.com/msacar/socket
 Sample Localhost Server Code:
 
 ```js
-const proxyBackend  = require('socket-io-reverse-proxy-client')
+const proxyBackend  = require('socket-io-proxy-localhost')
 const proxyBackendClient =  proxyBackend({
     //its your localhost
     server :"http://localhost",//its default
