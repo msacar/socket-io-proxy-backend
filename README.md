@@ -4,8 +4,8 @@
 Helps developers to reverse proxy their localhost via socket.io on on aws, heroku or any server can run node.js
 Uses socket.io to make a one way reverse proxy
 ## Requirements
-- a Node.js server installed with [Reverse proxy server](https://github.com/msacar/socket-io-reverse-proxy-server) (any server can run node.js which is going to be our publicly reachable server)
-- a [Localhost proxy client](https://github.com/msacar/socket-io-proxy-localhost) (which is make a connection from localhost to proxy server and serve our localhost)
+- any cloud or dedicated server can run Node.js installed with [Reverse proxy server](https://github.com/msacar/socket-io-reverse-proxy-server) (which is going to be our publicly reachable server)
+- a local computer can run Node.js installed with [Localhost proxy client](https://github.com/msacar/socket-io-proxy-localhost) (which is make a connection from localhost to proxy server and serve our localhost)
 
 This project depends on  [Reverse proxy server](https://github.com/msacar/socket-io-reverse-proxy-server)
 ## How to use
