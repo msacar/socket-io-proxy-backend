@@ -1,5 +1,5 @@
 {
-  "name": "socket-io-reverse-proxy-client",
+  "name": "socket-io-proxy-localhost",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

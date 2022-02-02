@@ -6,7 +6,6 @@ const fs = require('fs')
 const axios  = require("axios");
 let socket = {}
 
-axios.defaults.baseURL = process.env.BEHIND_SERVER
 
 const transformRequest = (jsonData = {}) =>
   Object.entries(jsonData)
@@ -37,6 +36,8 @@ module.exports = function (configData) {
 
         if (publishConfig.port)
             connectUrl +=`:${publishConfig.port.toString()}`
+
+        axios.defaults.baseURL = connectUrl
 
         socket = io.connect(connectUrl, {
             reconnection        : true,
