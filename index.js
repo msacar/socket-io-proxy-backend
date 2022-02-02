@@ -35,7 +35,7 @@ module.exports = function (configData) {
             throw new Error('Publisher server not defined')
         let connectUrl = `${publishConfig.server}`
 
-        if (config.publisher.port)
+        if (publishConfig.port)
             connectUrl +=`:${publishConfig.port.toString()}`
 
         socket = io.connect(connectUrl, {
@@ -138,7 +138,7 @@ module.exports = function (configData) {
     }
 
     return {
-        connect
+        publish
     }
 }
 
