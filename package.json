@@ -1,5 +1,5 @@
 {
-  "name": "socket-io-proxy-localhost",
+  "name": "socket-io-proxy-backend",
   "version": "1.0.3",
   "description": "",
   "main": "index.js",
