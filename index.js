@@ -51,16 +51,7 @@ module.exports = function (configData) {
         socket.on('connect', function () {
             console.log("connected")
             var ss_clientStream = ss.createStream();
-            var filename = 'profile.jpg';
-            ss(socket).emit('profile-image', ss_clientStream, {name: filename},
-                    ackReadableStream=>{
-                        let clientsWritableStream =  fs.createWriteStream('clientsSaveServersAckStream.jpg')
-                        ackReadableStream.pipe(clientsWritableStream)
-                    }
-                )
-            //CANT DELETE THIS LINE
-            fs.createReadStream(filename).pipe(ss_clientStream)
-
+          
             ss(socket).on('request', function (data, response) {
                 delete data.headers['content-length']
                 data.headers['X-Real-IP'] =            data.ip;
