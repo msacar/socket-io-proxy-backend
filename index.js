@@ -14,7 +14,6 @@ const transformRequest = (jsonData = {}) =>
 
 module.exports = function (configData) {
     let defaults =  {
-        publisher:{},
         backend:{},
         secretKey:null,
     }
@@ -28,6 +27,13 @@ module.exports = function (configData) {
     if (!config.server)
         throw new Error('Backend server required ')
 
+    let backendUrl =config.backend.server
+
+    if (config.backend.port && config.backend.port == 443 && config.backend.port == 80 )
+        backendUrl +=`:${publishConfig.port.toString()}`
+
+    axios.defaults.baseURL = backendUrl
+
 
     function publish(publishConfig){
         if (!publishConfig.server)
@@ -37,7 +43,6 @@ module.exports = function (configData) {
         if (publishConfig.port)
             connectUrl +=`:${publishConfig.port.toString()}`
 
-        axios.defaults.baseURL = connectUrl
 
         socket = io.connect(connectUrl, {
             reconnection        : true,
@@ -50,8 +55,6 @@ module.exports = function (configData) {
 
         socket.on('connect', function () {
             console.log("connected")
-            var ss_clientStream = ss.createStream();
-          
             ss(socket).on('request', function (data, response) {
                 delete data.headers['content-length']
                 data.headers['X-Real-IP'] =            data.ip;
@@ -61,6 +64,7 @@ module.exports = function (configData) {
 
                 switch (data.method) {
                     case "GET":
+                        console.log(connectUrl+"/"+data.url)
                         axios
                             .get(data.url, {
                                 params: transformRequest(data.query || {}),
