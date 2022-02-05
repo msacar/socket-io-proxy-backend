@@ -5,6 +5,7 @@ const ss = require('socket.io-stream');
 const fs = require('fs')
 const axios  = require("axios");
 let socket = {}
+const FormData = require('form-data');
 
 
 const transformRequest = (jsonData = {}) =>
@@ -27,9 +28,9 @@ module.exports = function (configData) {
     if (!config.server)
         throw new Error('Backend server required ')
 
-    let backendUrl =config.backend.server
+    let backendUrl =config.server
 
-    if (config.backend.port && config.backend.port == 443 && config.backend.port == 80 )
+    if (config.port && config.port.port == 443 && config.port.port == 80 )
         backendUrl +=`:${publishConfig.port.toString()}`
 
     axios.defaults.baseURL = backendUrl
@@ -64,7 +65,6 @@ module.exports = function (configData) {
 
                 switch (data.method) {
                     case "GET":
-                        console.log(connectUrl+"/"+data.url)
                         axios
                             .get(data.url, {
                                 params: transformRequest(data.query || {}),
@@ -95,20 +95,49 @@ module.exports = function (configData) {
 
                         break;
                     case "POST":
-                        axios
-                            .post(data.url, transformRequest(data.body || {}), {
-                                headers: data.headers,
-                                redirect: 'manual',
-                                maxRedirects:0
-                            })
+
+                        let postData = data.body
+                        if (data.headers["content-type"] === "application/x-www-form-urlencoded")
+                        {
+                            const params = new URLSearchParams();
+                            for (let key in data.body){
+                                params.append(key,data.body[key])
+                            }
+                            postData =params;
+                        }
+
+                        axios({
+                            method: 'post',
+                            url: data.url,
+                            params: transformRequest(Object.assign(data.query)),
+                            data: postData,
+                            headers:data.headers,
+                            redirect: 'manual',
+                            maxRedirects:0
+                        })
                             .then(result => {
-                                response({
+                                let ackStream =ss.createStream();
+                                response(ackStream,{
                                     status : result.status,
                                     headers: result.headers,
-                                    content: result.data,
                                 })
+                                result.data.pipe(ackStream)
+                                //
+                                // response({
+                                //     status : result.status,
+                                //     headers: result.headers,
+                                //     content: result.data,
+                                // })
                             })
                             .catch(err => {
+                                let ackStream =ss.createStream();
+                                response({
+                                    status : err.response ? err.response.status :null, 
+                                    headers: err.response ? err.response.headers :null, 
+                                    content: err.response ? err.response.data :null, 
+                                })
+                                // result.data.pipe(ackStream)
+                                return
                                 console.warn(err)
                                 response(
                                     {
